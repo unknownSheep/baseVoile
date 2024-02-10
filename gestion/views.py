@@ -1,20 +1,26 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import loader
+from .models import Adherent, Gear
 
 
-# Create your views here.
+# Option pour trier
 
 
 def index(request):
-    return HttpResponse("hello world")
+    return HttpResponse("index")
 
 
 def gear(request):
-    context = {"latest_question_list": "boop"}
+    context = {"gear": Gear.objects.all()}
     return render(request, "gestion/listGear.html", context)
 
 
 def adherents(request):
-    return HttpResponse("adherents")
+    context = {"adherents": Adherent.objects.all()}
+    return render(request, "gestion/listAdherent.html", context)
+
+
+def rent(request):
+    return HttpResponse("emprunt")
 

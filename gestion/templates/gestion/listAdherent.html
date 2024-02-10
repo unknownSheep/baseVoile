@@ -1,0 +1,40 @@
+{% include "gestion/header.html" %}
+
+<body>
+<h1>Gestion Adherents</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>email</th>
+        <th>Tel</th>
+        <th>Validité</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for a in adherents %}
+        {% if edit_id != a.id%}
+            <tr>
+                <th>{{ a.id }}</th>
+                <td>{{ a.surname }}</td>
+                <td>{{ a.firstname }}</td>
+                <td>{{ a.email }}</td>
+                <td>{{ a.phone }}</td>
+                {% if a.validity == True %}
+                    <td>V</td>
+                {% else %}
+                    <td>X</td>
+                {% endif %}
+            </tr>
+        {% endif %}
+    {% endfor %}
+    </tbody>
+</table>
+
+</body>
+
+{% include "gestion/footer.html" %}
+
