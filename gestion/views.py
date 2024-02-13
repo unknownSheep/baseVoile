@@ -1,14 +1,16 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import loader
+from django.utils import timezone
 from .models import Adherent, Gear, Rentals
 
 
-# Option pour trier
-
-
 def rent(request):
-    context = {"emprunts": Rentals.objects.all()}
+    print()
+    context = {
+        "sortis":  Rentals.objects.filter(returnTime__isnull=True).order_by('startTime'),
+        "rentres": Rentals.objects.filter(returnTime__isnull=False).filter(startTime__day=timezone.now().day).order_by('startTime')
+    }
     return render(request, "gestion/index.html", context)
 
 
