@@ -1,0 +1,19 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<meta charset="UTF-8">
+<title>AS CEA ST Section Voile</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="{% static 'css/gestion/w3.css' %}">
+
+<body>
+    <div class="w3-container">
+        <div class="w3-top w3-bar w3-black">
+            <a href="{% url 'adherents' %}" class="w3-bar-item w3-button">Adhérents</a>
+            <a href="{% url 'gear' %}" class="w3-bar-item w3-button">Matériel</a>
+            <a href="{% url 'rent' %}" class="w3-bar-item w3-button">Gestion Emprunts</a>
+            <a href="#reparations" class="w3-bar-item w3-button">Reparations</a>
+            <a href="#historique" class="w3-bar-item w3-button">Historique</a>
+        </div>
+        <br><br>

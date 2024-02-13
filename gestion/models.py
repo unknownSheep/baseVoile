@@ -1,13 +1,12 @@
 from django.db import models
 
 
-
 class Adherent(models.Model):
     firstname = models.CharField(max_length=20)
     surname = models.CharField(max_length=20)
     email = models.EmailField(null=True, blank=True)
     phone = models.IntegerField(null=True, blank=True)
-    validity = models.BooleanField(default=True)
+    adhesion = models.IntegerField(default=True)
 
     def __str__(self):
         return self.firstname + " " + self.surname
@@ -39,12 +38,20 @@ class Gear(models.Model):
         verbose_name = 'Materiel'
 
 
-class Rent(models.Model):
-    adherent = models.ForeignKey(Adherent, on_delete=models.DO_NOTHING, null=False)
-    gear1 = models.ForeignKey(Gear, on_delete=models.DO_NOTHING, null=False)
-    gear2 = models.ForeignKey(Gear, on_delete=models.DO_NOTHING, null=False)
-    date = models.DateField(null=False, blank=False)
-    startTime = models.TimeField(null=False, blank=False)
-    returnTime = models.TimeField(null=False, blank=False)
+class Rentals(models.Model):
+    adherent1 = models.ForeignKey(Adherent, on_delete=models.DO_NOTHING, related_name='adherent1')
+    adherent2 = models.ForeignKey(Adherent, on_delete=models.DO_NOTHING, related_name='adherent2', blank=True, null=True)  # optionel
+
+    gear1 = models.ForeignKey(Gear, on_delete=models.DO_NOTHING, related_name='gear1', default=None)
+    gear2 = models.ForeignKey(Gear, on_delete=models.DO_NOTHING, related_name='gear2', default=None, blank=True, null=True)  # optionel
+
+    startTime = models.DateTimeField(default=None)
+    returnTime = models.DateTimeField(default=None, blank=True, null=True)  # optionel
+
     isDamaged = models.BooleanField(default=False)
 
+    def __str__(self):
+        return self.adherent1.firstname + " " + self.adherent1.surname + " : " + self.gear1.name
+
+    class Meta:
+        verbose_name = 'Emprunt'
