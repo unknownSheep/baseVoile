@@ -31,7 +31,7 @@ def rent(request): # TODO: retour + degats et mise en page du form de l'ajout
     }
     return render(request, "gestion/index.html", context)
 
-def gear(request):  # TODO: add sorting by name/cat...
+def gear(request): # TODO: add sorting by name/cat...
     context = {"materiel": Gear.objects.all()}
     return render(request, "gestion/materiel.html", context)
 
