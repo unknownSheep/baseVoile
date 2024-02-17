@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 
 class Adherent(models.Model):
@@ -32,7 +33,7 @@ class Gear(models.Model):
     photo = models.ImageField(upload_to='photos/', null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return self.category.name + ": " + self.name
 
     class Meta:
         verbose_name = 'Materiel'
@@ -45,7 +46,7 @@ class Rentals(models.Model):
     gear1 = models.ForeignKey(Gear, on_delete=models.DO_NOTHING, related_name='gear1', default=None)
     gear2 = models.ForeignKey(Gear, on_delete=models.DO_NOTHING, related_name='gear2', default=None, blank=True, null=True)  # optionel
 
-    startTime = models.DateTimeField(default=None)
+    startTime = models.DateTimeField(default=timezone.now(), blank=False, null=False)
     returnTime = models.DateTimeField(default=None, blank=True, null=True)  # optionel
 
     isDamaged = models.BooleanField(default=False)
