@@ -39,17 +39,18 @@ class Gear(models.Model):
         verbose_name = 'Materiel'
 
 
-class Rentals(models.Model):
+class Emprunt(models.Model):
     adherent1 = models.ForeignKey(Adherent, on_delete=models.DO_NOTHING, related_name='adherent1')
     adherent2 = models.ForeignKey(Adherent, on_delete=models.DO_NOTHING, related_name='adherent2', blank=True, null=True)  # optionel
 
     gear1 = models.ForeignKey(Gear, on_delete=models.DO_NOTHING, related_name='gear1', default=None)
     gear2 = models.ForeignKey(Gear, on_delete=models.DO_NOTHING, related_name='gear2', default=None, blank=True, null=True)  # optionel
 
-    startTime = models.DateTimeField(default=timezone.now(), blank=False, null=False)
+    startTime = models.DateTimeField(default=timezone.now, blank=False, null=False)
     returnTime = models.DateTimeField(default=None, blank=True, null=True)  # optionel
 
-    isDamaged = models.BooleanField(default=False)
+    gear1IsDamaged = models.BooleanField(default=False)
+    gear2IsDamaged = models.BooleanField(default=False)
 
     def __str__(self):
         return self.adherent1.firstname + " " + self.adherent1.surname + " : " + self.gear1.name

@@ -30,16 +30,22 @@
                         {% endif %}
                     {% endif %}
                     </td>
-                    <td></td>
-                    <td></td>
+                    <td colspan="2">
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="submit" name="action" value="Retour">
+                            <input type="hidden" name="id" value="{{ e.id }}">
+                            {{ retourForm.as_div }}
+                        </form>
+                    </td>
                 </tr>
             {% endfor %}
         <tr>
             <th scope="row" colspan="6">
                 <form method="post">
                     {% csrf_token %}
-                    {{ form.as_div }}
-                    <input type="submit" value="Nouvel Emprunt">
+                    {{ nouvelEmpruntForm.as_div }}
+                    <input type="submit" name="action" value="Nouvel Emprunt">
                 </form>
             </th>
         </tr>
@@ -70,7 +76,14 @@
                 </td>
                 <td>{{ e.returnTime.time }}</td>
                 <td>
-                    {% if e.isDamaged %}
+                    Degats Materiel 1:
+                    {% if e.gear1IsDamaged %}
+                    	V
+                    {% else %}
+                        X
+                    {% endif %}
+                    <br> Degats Materiel 2:
+                    {% if e.gear2IsDamaged %}
                     	V
                     {% else %}
                         X

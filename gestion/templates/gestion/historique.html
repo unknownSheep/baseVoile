@@ -30,7 +30,14 @@
                 {% endif %}
                 </td>
                 <td>
-                    {% if e.isDamaged %}
+                    Degats Materiel 1:
+                    {% if e.gear1IsDamaged %}
+                    	V
+                    {% else %}
+                        X
+                    {% endif %}
+                    <br> Degats Materiel 2:
+                    {% if e.gear2IsDamaged %}
                     	V
                     {% else %}
                         X
