@@ -11,10 +11,34 @@
 <body>
     <div class="w3-container">
         <div class="w3-top w3-bar w3-black">
-            <a href="{% url 'adherents' %}" class="w3-bar-item w3-button">Adhérents</a>
-            <a href="{% url 'gear' %}" class="w3-bar-item w3-button">Matériel</a>
-            <a href="{% url 'emprunts' %}" class="w3-bar-item w3-button">Emprunts</a>
-            <a href="{% url 'reparations' %}" class="w3-bar-item w3-button">Reparations</a>
-            <a href="{% url 'historique' %}" class="w3-bar-item w3-button">Historique</a>
+            {% if pageName == "adherents"%}
+                <a href="{% url 'adherents' %}" class="w3-bar-item w3-button w3-grey">Adhérents</a>
+            {% else %}
+                <a href="{% url 'adherents' %}" class="w3-bar-item w3-button">Adhérents</a>
+            {% endif %}
+
+            {% if pageName == "materiel"%}
+                <a href="{% url 'gear' %}" class="w3-bar-item w3-button w3-grey">Matériel</a>
+            {% else %}
+                <a href="{% url 'gear' %}" class="w3-bar-item w3-button">Matériel</a>
+            {% endif %}
+
+            {% if pageName == "emprunts"%}
+                <a href="{% url 'emprunts' %}" class="w3-bar-item w3-button w3-grey">Emprunts</a>
+            {% else %}
+                <a href="{% url 'emprunts' %}" class="w3-bar-item w3-button">Emprunts</a>
+            {% endif %}
+
+            {% if pageName == "repair"%}
+                <a href="{% url 'reparations' %}" class="w3-bar-item w3-button w3-grey">Réparations</a>
+            {% else %}
+                <a href="{% url 'reparations' %}" class="w3-bar-item w3-button">Réparations</a>
+            {% endif %}
+
+            {% if pageName == "historique"%}
+                <a href="{% url 'historique' %}" class="w3-bar-item w3-button w3-grey">Historique</a>
+            {% else %}
+                <a href="{% url 'historique' %}" class="w3-bar-item w3-button">Historique</a>
+            {% endif %}
         </div>
         <br><br>
