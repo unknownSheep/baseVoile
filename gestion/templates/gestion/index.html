@@ -1,13 +1,16 @@
 {% include "gestion/head.html" %}
-        <table class="w3-table-all w3-hoverable">
+        <table class="table-sortable w3-table-all w3-hoverable">
+            <thead>
             <tr>
-                <th>Noms Adherents</th>
-                <th>Depart</th>
-                <th>Materiel 1</th>
-                <th>Materiel 2</th>
+                <th data-sort="string">Noms Adherents</th>
+                <th data-sort="string">Depart</th>
+                <th data-sort="string">Materiel 1</th>
+                <th data-sort="string">Materiel 2</th>
                 <th>Retour</th>
                 <th>Degats</th>
             </tr>
+            </thead>
+            <tbody
             {% for e in sortis %}
                 <tr>
                     <td>{{ e.adherent1 }}<br>{% if e.adherent2 %}{{ e.adherent2 }} {% endif %}</td>
@@ -40,18 +43,33 @@
                     </td>
                 </tr>
             {% endfor %}
-        <tr>
-            <th scope="row" colspan="6">
+            </tbody>
+        </table>
+
+        <div>
                 <form method="post">
                     {% csrf_token %}
                     {{ nouvelEmpruntForm.as_div }}
                     <input type="submit" name="action" value="Nouvel Emprunt">
                 </form>
-            </th>
-        </tr>
-        <tr>
-            <th scope="row" colspan="6"><h1 class="l1">Retours</h1></th>
-        </tr>
+        </div>
+
+        <div>
+            <h1 class="l1">Retours</h1>
+        </div>
+
+        <table class="table-sortable w3-table-all w3-hoverable">
+            <thead>
+            <tr>
+                <th data-sort="string">Noms Adherents</th>
+                <th data-sort="string">Depart</th>
+                <th data-sort="string">Materiel 1</th>
+                <th data-sort="string">Materiel 2</th>
+                <th>Retour</th>
+                <th>Degats</th>
+            </tr>
+            </thead>
+            <tbody>
         {% for e in rentres %}
             <tr>
                 <td>{{ e.adherent1 }}<br>{% if e.adherent2 %}{{ e.adherent2 }} {% endif %}</td>
@@ -91,6 +109,8 @@
                 </td>
             </tr>
         {% endfor %}
+        </tbody>
         </table>
+        <script>document.querySelectorAll('.table-sortable').forEach(el => el.tsortable())</script>
     </div>
 </body>
