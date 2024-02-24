@@ -1,7 +1,6 @@
 {% include "gestion/head.html" %}
 <table class="w3-table-all w3-hoverable">
     <tr>
-        <th>Id</th>
         <th>Nom</th>
         <th>Categorie</th>
         <th>Photos</th>
@@ -9,7 +8,6 @@
     </tr>
     {% for m in reparer %}
         <tr>
-            <td>{{ m.id }}</td>
             <td>{{ m.name }}</td>
             <td>{{ m.category.name }}</td>
 

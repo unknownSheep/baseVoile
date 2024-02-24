@@ -1,7 +1,6 @@
 {% include "gestion/head.html" %}
         <table class="w3-table-all w3-hoverable">
             <tr>
-                <th>Id</th>
                 <th>Nom</th>
                 <th>Prénom</th>
                 <th>Téléphone</th>
@@ -10,7 +9,6 @@
             </tr>
             {% for a in adherents %}
                 <tr>
-                    <td>{{ a.id }}</td>
                     <td>{{ a.surname }}</td>
                     <td>{{ a.firstname }}</td>
                     <td>{{ a.phone }}</td>
