@@ -7,7 +7,7 @@ from .forms import NouvelEmpruntForm, RetourForm
 from .models import Adherent, Gear, Emprunt
 
 
-def rent(request): # TODO: retour + degats et mise en page du form de l'ajout
+def emprunts(request): # TODO: retour + degats et mise en page du form de l'ajout
     nouvelEmpruntForm = None
     retourForm = None
     if request.method == 'POST':
@@ -15,7 +15,7 @@ def rent(request): # TODO: retour + degats et mise en page du form de l'ajout
             nouvelEmpruntForm = NouvelEmpruntForm(request.POST)
             if nouvelEmpruntForm.is_valid():
                 nouvelEmpruntForm.save()
-                return redirect('rent')
+                return redirect('emprunts')
 
         elif request.POST['action'] == 'Retour':
             retourForm = RetourForm(request.POST)
@@ -36,7 +36,7 @@ def rent(request): # TODO: retour + degats et mise en page du form de l'ajout
                     gear2.toRepair = gear2.toRepair or retourForm.cleaned_data['gear2IsDamaged']
                     gear2.save()
 
-                return redirect('rent')
+                return redirect('emprunts')
     else:
         nouvelEmpruntForm = NouvelEmpruntForm()
         retourForm = RetourForm()
