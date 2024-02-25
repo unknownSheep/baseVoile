@@ -21,6 +21,13 @@
             {% endfor %}
             </tbody>
         </table>
+        <div>
+            <form method="post">
+                {% csrf_token %}
+                {{ addForm }}
+                <input type="submit" name="action" value="Ajouter">
+            </form>
+        </div>
     </div>
     <script>document.querySelector('.table-sortable').tsortable()</script>
 </body>

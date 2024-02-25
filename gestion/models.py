@@ -3,11 +3,11 @@ from django.utils import timezone
 
 
 class Adherent(models.Model):
-    firstname = models.CharField(max_length=20)
-    surname = models.CharField(max_length=20)
-    email = models.EmailField(null=True, blank=True)
-    phone = models.IntegerField(null=True, blank=True)
-    adhesion = models.IntegerField(default=True)
+    firstname = models.CharField(max_length=64)
+    surname = models.CharField(max_length=64)
+    email = models.EmailField(null=True, blank=True, default=None)
+    phone = models.IntegerField(null=True, blank=True, default=None)
+    adhesion = models.IntegerField()
 
     def __str__(self):
         return self.firstname + " " + self.surname

@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.template import loader
 from django.utils import timezone
 
-from .forms import NouvelEmpruntForm, RetourForm
+from .forms import NouvelEmpruntForm, RetourForm, AdherentForm
 from .models import Adherent, Gear, Emprunt
 
 
@@ -51,7 +51,7 @@ def emprunts(request): # TODO: retour + degats et mise en page du form de l'ajou
                                                                    .filter(startTime__year=timezone.now().year)
                                                                    .order_by('returnTime'),
     }
-    return render(request, "gestion/index.html", context)
+    return render(request, "gestion/emprunts.html", context)
 
 
 def gear(request):  # TODO: sorting + add pictures + add new form
@@ -62,13 +62,31 @@ def gear(request):  # TODO: sorting + add pictures + add new form
 
 
 def adherents(request):  # TODO:  sorting
+    nouvelAdherentForm = None
+    if request.method == 'POST':
+        nouvelAdherentForm = AdherentForm(request.POST)
+        if nouvelAdherentForm.is_valid():
+            nouvelAdherentForm.save()
+            return redirect('adherents')
+    else:
+        nouvelAdherentForm = AdherentForm()
+
     context = {"adherents": Adherent.objects.all(),
                "pageName": "adherents",
+               "addForm": nouvelAdherentForm
                }
     return render(request, "gestion/adherents.html", context)
 
 
-def repair(request): # TODO: sorting + Repaired
+def repair(request):  # TODO: sorting
+
+    if request.method == "POST":
+        if request.POST['action'] == 'repare':
+            gearId = int(request.POST['id'])
+            g = Gear.objects.get(id=gearId)
+            g.toRepair = False
+            g.save()
+
     context = {"reparer": Gear.objects.filter(toRepair=True),
                "pageName": "repair",
                }
