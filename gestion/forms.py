@@ -1,6 +1,6 @@
 from django import forms
 
-from gestion.models import Adherent, Gear, Emprunt
+from gestion.models import Adherent, Gear, Emprunt, GearCat
 
 
 class NouvelEmpruntForm(forms.ModelForm):
@@ -25,6 +25,16 @@ class AdherentForm(forms.ModelForm):
     class Meta:
         model = Adherent
         fields = ['firstname', 'surname', 'email', 'phone', 'adhesion']
+
+
+class GearForm(forms.ModelForm):
+    name = forms.CharField(max_length=64, label="Nom", required=True)
+    category = forms.ModelChoiceField(queryset=GearCat.objects.all(), label="Categorie", required=True)
+    photo = forms.ImageField(label="Photo", required=False)
+
+    class Meta:
+        model = Gear
+        fields = ['name', 'category', 'photo']
 
 
 class RetourForm(forms.Form):

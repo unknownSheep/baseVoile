@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.template import loader
 from django.utils import timezone
 
-from .forms import NouvelEmpruntForm, RetourForm, AdherentForm
+from .forms import NouvelEmpruntForm, RetourForm, AdherentForm, GearForm
 from .models import Adherent, Gear, Emprunt
 
 
@@ -54,17 +54,29 @@ def emprunts(request): # TODO: retour + degats et mise en page du form de l'ajou
     return render(request, "gestion/emprunts.html", context)
 
 
-def gear(request):  # TODO: sorting + add pictures + add new form
-    context = {"materiel": Gear.objects.all(),
-               "pageName": "materiel",
-               }
+def gear(request):
+    newGearForm = None
+
+    if request.method == 'POST':
+        newGearForm = GearForm(request.POST)
+        if newGearForm.is_valid():
+            newGearForm.save()
+            return redirect('gear')
+    else:
+        newGearForm = GearForm()
+
+    context = {
+        "newGearForm": newGearForm,
+        "materiel": Gear.objects.all(),
+        "pageName": "materiel",
+       }
     return render(request, "gestion/materiel.html", context)
 
 
 def adherents(request):  # TODO:  sorting
     nouvelAdherentForm = None
     if request.method == 'POST':
-        nouvelAdherentForm = AdherentForm(request.POST)
+        nouvelAdherentForm = AdherentForm(request.POST, request.FILES)
         if nouvelAdherentForm.is_valid():
             nouvelAdherentForm.save()
             return redirect('adherents')
