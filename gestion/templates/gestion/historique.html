@@ -1,12 +1,15 @@
 {% include "gestion/head.html" %}
-        <table class="w3-table-all w3-hoverable">
+        <table class="table-sortable w3-table-all w3-hoverable">
+            <thead>
             <tr>
-                <th>Noms Adherents</th>
-                <th>Date</th>
-                <th>Materiel 1</th>
-                <th>Materiel 2</th>
-                <th>Degats</th>
+                <th data-sort="string">Noms Adherents</th>
+                <th data-sort="string">Date</th>
+                <th data-sort="string">Materiel 1</th>
+                <th data-sort="string">Materiel 2</th>
+                <th data-sort="string">Degats</th>
             </tr>
+            </thead>
+            <tbody>
             {% for e in emprunts %}
             <tr>
                 <td>{{ e.adherent1.firstname }} {{ e.adherent1.surname }}<br>{{ e.adherent2.firstname }} {{ e.adherent2.surname }}</td>
@@ -45,6 +48,8 @@
                 </td>
             </tr>
         {% endfor %}
+        </tbody>
         </table>
+        <script>document.querySelector('.table-sortable').tsortable()</script>
     </div>
 </body>

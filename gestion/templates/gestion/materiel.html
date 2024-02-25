@@ -1,11 +1,14 @@
 {% include "gestion/head.html" %}
-        <table class="w3-table-all w3-hoverable">
+        <table class="table-sortable w3-table-all w3-hoverable">
             <tr>
-                <th>Nom</th>
-                <th>Categorie</th>
-                <th>Photos</th>
-                <th>A reparer</th>
+                <thead>
+                <th data-sort="string">Nom</th>
+                <th data-sort="string">Categorie</th>
+                <th data-sort="string">Photos</th>
+                <th data-sort="string">A reparer</th>
+                </thead>
             </tr>
+            <tbody>
             {% for m in materiel %}
                 <tr>
                     <td>{{ m.name }}</td>
@@ -24,6 +27,8 @@
                     <td></td>
                 </tr>
             {% endfor %}
+            </tbody>
         </table>
+        <script>document.querySelector('.table-sortable').tsortable()</script>
     </div>
 </body>
