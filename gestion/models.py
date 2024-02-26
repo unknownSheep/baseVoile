@@ -38,13 +38,13 @@ class Gear(models.Model):
 
 class Emprunt(models.Model):
     adherent1 = models.ForeignKey(Adherent, on_delete=models.DO_NOTHING, related_name='adherent1')
-    adherent2 = models.ForeignKey(Adherent, on_delete=models.DO_NOTHING, related_name='adherent2', blank=True, null=True)  # optionel
+    adherent2 = models.ForeignKey(Adherent, on_delete=models.DO_NOTHING, related_name='adherent2', blank=True, null=True)
 
     gear1 = models.ForeignKey(Gear, on_delete=models.DO_NOTHING, related_name='gear1', default=None)
-    gear2 = models.ForeignKey(Gear, on_delete=models.DO_NOTHING, related_name='gear2', default=None, blank=True, null=True)  # optionel
+    gear2 = models.ForeignKey(Gear, on_delete=models.DO_NOTHING, related_name='gear2', default=None, blank=True, null=True)
 
     startTime = models.DateTimeField(default=timezone.now, blank=False, null=False)
-    returnTime = models.DateTimeField(default=None, blank=True, null=True)  # optionel
+    returnTime = models.DateTimeField(default=None, blank=True, null=True)
 
     gear1IsDamaged = models.BooleanField(default=False)
     gear2IsDamaged = models.BooleanField(default=False)

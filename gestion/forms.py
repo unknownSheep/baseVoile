@@ -27,7 +27,7 @@ class AdherentForm(forms.ModelForm):
 class GearForm(forms.ModelForm):
     name = forms.CharField(max_length=64, label="Nom", required=True)
     category = forms.ModelChoiceField(queryset=GearCat.objects.all(), label="Categorie", required=True)
-    photo = forms.ImageField(label="Photo", required=False)
+    # photo = forms.ImageField(label="Photo", required=False)
 
     class Meta:
         model = Gear

@@ -58,7 +58,7 @@ def gear(request):
     newGearForm = None
 
     if request.method == 'POST':
-        newGearForm = GearForm(request.POST)
+        newGearForm = GearForm(request.POST, request.FILES)
         if newGearForm.is_valid():
             newGearForm.save()
             return redirect('gear')
