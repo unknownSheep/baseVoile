@@ -16,15 +16,12 @@ class NouvelEmpruntForm(forms.ModelForm):
 
 
 class AdherentForm(forms.ModelForm):
-    firstname = forms.CharField(max_length=64, label="Prenom", required=True)
-    surname = forms.CharField(max_length=64, label="Nom", required=True)
-    email = forms.EmailField(max_length=64, label="e-mail", required=False)
-    phone = forms.IntegerField(label="Tel", required=False)
+    name = forms.CharField(max_length=64, label="NOM Prenom", required=True)
     adhesion = forms.CharField(max_length=64, label="Adhesion", required=True)
 
     class Meta:
         model = Adherent
-        fields = ['firstname', 'surname', 'email', 'phone', 'adhesion']
+        fields = ['name', 'adhesion']
 
 
 class GearForm(forms.ModelForm):

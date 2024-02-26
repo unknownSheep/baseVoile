@@ -3,14 +3,11 @@ from django.utils import timezone
 
 
 class Adherent(models.Model):
-    firstname = models.CharField(max_length=64)
-    surname = models.CharField(max_length=64)
-    email = models.EmailField(null=True, blank=True, default=None)
-    phone = models.IntegerField(null=True, blank=True, default=None)
+    name = models.CharField(max_length=64)
     adhesion = models.IntegerField()
 
     def __str__(self):
-        return self.firstname + " " + self.surname
+        return self.name + " __ Cotisation : " + str(self.adhesion)
 
     class Meta:
         verbose_name = 'Adherent'
@@ -53,7 +50,7 @@ class Emprunt(models.Model):
     gear2IsDamaged = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.adherent1.firstname + " " + self.adherent1.surname + " : " + self.gear1.name
+        return self.adherent1.name + " : " + self.gear1.name
 
     class Meta:
         verbose_name = 'Emprunt'

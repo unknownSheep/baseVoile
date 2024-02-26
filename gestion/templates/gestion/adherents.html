@@ -2,20 +2,14 @@
         <table class="table-sortable w3-table-all w3-hoverable">
             <thead>
             <tr>
-                <th data-sort="string">Nom</th>
-                <th data-sort="string">Prénom</th>
-                <th data-sort="string">Téléphone</th>
-                <th data-sort="string">e-mail</th>
+                <th data-sort="string">NOM Prenom</th>
                 <th data-sort="date">Cotisation</th>
             </tr>
             </thead>
             <tbody>
             {% for a in adherents %}
                 <tr>
-                    <td>{{ a.surname }}</td>
-                    <td>{{ a.firstname }}</td>
-                    <td>{{ a.phone }}</td>
-                    <td>{{ a.email }}</td>
+                    <td>{{ a.name }}</td>
                     <td>{{ a.adhesion }}</td>
                 </tr>
             {% endfor %}
