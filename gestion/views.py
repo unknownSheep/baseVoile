@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.template import loader
 from django.utils import timezone
 
-from .forms import NouvelEmpruntForm, RetourForm, AdherentForm, GearForm
+from .forms import NouvelEmpruntForm, RetourForm, AdherentForm, GearForm, AddImageForm
 from .models import Adherent, Gear, Emprunt
 
 
@@ -54,19 +54,34 @@ def emprunts(request): # TODO: retour + degats et mise en page du form de l'ajou
     return render(request, "gestion/emprunts.html", context)
 
 
-def gear(request):
+def materiel(request):
     newGearForm = None
+    addImageForm = None
 
     if request.method == 'POST':
-        newGearForm = GearForm(request.POST, request.FILES)
-        if newGearForm.is_valid():
-            newGearForm.save()
-            return redirect('gear')
+        if request.POST['action'] == 'Ajouter':
+            newGearForm = GearForm(request.POST, request.FILES)
+            if newGearForm.is_valid():
+                newGearForm.save()
+                return redirect('materiel')
+
+        elif request.POST['action'] == 'Envoyer':
+            addImageForm = AddImageForm(request.POST, request.FILES)
+            gear_id = int(request.POST['id'])
+            if addImageForm.is_valid():
+                g = Gear.objects.get(id=gear_id)
+                imageFile = request.FILES['photo']
+                g.photo = imageFile
+                g.save()
+                return redirect('materiel')
+
     else:
         newGearForm = GearForm()
+        addImageForm = AddImageForm()
 
     context = {
         "newGearForm": newGearForm,
+        "addImageForm": addImageForm,
         "materiel": Gear.objects.all(),
         "pageName": "materiel",
        }
@@ -93,7 +108,7 @@ def adherents(request):  # TODO:  sorting
 def repair(request):  # TODO: sorting
 
     if request.method == "POST":
-        if request.POST['action'] == 'repare':
+        if request.POST['action'] == 'Repare':
             gearId = int(request.POST['id'])
             g = Gear.objects.get(id=gearId)
             g.toRepair = False

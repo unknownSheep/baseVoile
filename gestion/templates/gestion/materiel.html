@@ -17,6 +17,13 @@
                     <td>
                         {% if m.photo %}
                             <img src="{{ m.photo.url }}" alt="" width="100" height="100">
+                        {% else %}
+                            <form method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {{ addImageForm.as_div }}
+                                <input type="hidden" name="id" value="{{ m.id }}">
+                                <input type="submit" name="action" value="Envoyer">
+                            </form>
                         {% endif %}
                     </td>
                     {% if m.toRepair %}

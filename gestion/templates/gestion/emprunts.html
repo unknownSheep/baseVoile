@@ -47,11 +47,11 @@
         </table>
 
         <div>
-                <form method="post">
-                    {% csrf_token %}
-                    {{ nouvelEmpruntForm.as_div }}
-                    <input type="submit" name="action" value="Nouvel Emprunt">
-                </form>
+            <form method="post">
+                {% csrf_token %}
+                {{ nouvelEmpruntForm.as_div }}
+                <input type="submit" name="action" value="Nouvel Emprunt">
+            </form>
         </div>
 
         <div>
@@ -65,7 +65,7 @@
                 <th data-sort="string">Depart</th>
                 <th data-sort="string">Materiel 1</th>
                 <th data-sort="string">Materiel 2</th>
-                <th>Retour</th>
+                <th data-sort="string">Retour</th>
                 <th>Degats</th>
             </tr>
             </thead>

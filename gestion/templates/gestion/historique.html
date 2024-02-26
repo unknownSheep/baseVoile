@@ -12,7 +12,7 @@
             <tbody>
             {% for e in emprunts %}
             <tr>
-                <td>{{ e.adherent1.firstname }} {{ e.adherent1.surname }}<br>{{ e.adherent2.firstname }} {{ e.adherent2.surname }}</td>
+                <td>{{ e.adherent1 }}<br>{% if e.adherent2 %}{{ e.adherent2 }} {% endif %}</td>
                 <td>{{ e.startTime.date }}</td>
                 <td>
                 {% if e.gear1 %}

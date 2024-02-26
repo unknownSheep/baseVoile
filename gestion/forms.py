@@ -4,8 +4,8 @@ from gestion.models import Adherent, Gear, Emprunt, GearCat
 
 
 class NouvelEmpruntForm(forms.ModelForm):
-    adherent1 = forms.ModelChoiceField(queryset=Adherent.objects.all(), label="Barreur", required=True)
-    adherent2 = forms.ModelChoiceField(queryset=Adherent.objects.all(), label="Equipier", required=False)
+    adherent1 = forms.ModelChoiceField(queryset=Adherent.objects.all(), label="Adherent 1", required=True)
+    adherent2 = forms.ModelChoiceField(queryset=Adherent.objects.all(), label="Adherent 2", required=False)
 
     gear1 = forms.ModelChoiceField(queryset=Gear.objects.all(), label="Materiel 1", required=True)
     gear2 = forms.ModelChoiceField(queryset=Gear.objects.all(), label="Materiel 2", required=False)
@@ -27,11 +27,18 @@ class AdherentForm(forms.ModelForm):
 class GearForm(forms.ModelForm):
     name = forms.CharField(max_length=64, label="Nom", required=True)
     category = forms.ModelChoiceField(queryset=GearCat.objects.all(), label="Categorie", required=True)
-    # photo = forms.ImageField(label="Photo", required=False)
+    photo = forms.ImageField(label="Photo", required=False)
 
     class Meta:
         model = Gear
         fields = ['name', 'category', 'photo']
+
+
+class AddImageForm(forms.Form):
+    photo = forms.ImageField(label="Ajouter image", required=True)
+
+    class Meta:
+        fields = ['photo']
 
 
 class RetourForm(forms.Form):

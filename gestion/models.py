@@ -3,7 +3,7 @@ from django.utils import timezone
 
 
 class Adherent(models.Model):
-    name = models.CharField(max_length=64)
+    name = models.CharField(max_length=64, unique=True)
     adhesion = models.IntegerField()
 
     def __str__(self):
@@ -14,7 +14,7 @@ class Adherent(models.Model):
 
 
 class GearCat(models.Model):
-    name = models.CharField(max_length=64)
+    name = models.CharField(max_length=64, unique=True)
 
     def __str__(self):
         return self.name
@@ -24,7 +24,7 @@ class GearCat(models.Model):
 
 
 class Gear(models.Model):
-    name = models.CharField(max_length=64)
+    name = models.CharField(max_length=64, unique=True)
     category = models.ForeignKey(GearCat, on_delete=models.DO_NOTHING, null=False)
     toRepair = models.BooleanField(default=False)
     photo = models.ImageField(upload_to='photos/', null=True, blank=True)
