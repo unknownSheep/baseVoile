@@ -1,14 +1,14 @@
 from django import forms
 
-from gestion.models import Adherent, Gear, Emprunt, GearCat
+from gestion.models import Adherent, Gear, Emprunt, GearCat, Reparation
 
 
 class NouvelEmpruntForm(forms.ModelForm):
-    adherent1 = forms.ModelChoiceField(queryset=Adherent.objects.all(), label="Adherent 1", required=True)
-    adherent2 = forms.ModelChoiceField(queryset=Adherent.objects.all(), label="Adherent 2", required=False)
+    adherent1 = forms.ModelChoiceField(queryset=Adherent.objects.all(), label="Adherent 1", required=True, widget=forms.Select(attrs={'class': 'chosen-select'}))
+    adherent2 = forms.ModelChoiceField(queryset=Adherent.objects.all(), label="Adherent 2", required=False, widget=forms.Select(attrs={'class': 'chosen-select'}))
 
-    gear1 = forms.ModelChoiceField(queryset=Gear.objects.all(), label="Materiel 1", required=True)
-    gear2 = forms.ModelChoiceField(queryset=Gear.objects.all(), label="Materiel 2", required=False)
+    gear1 = forms.ModelChoiceField(queryset=Gear.objects.filter(isInService=True), label="Materiel 1", required=True, widget=forms.Select(attrs={'class': 'chosen-select'}))
+    gear2 = forms.ModelChoiceField(queryset=Gear.objects.filter(isInService=True), label="Materiel 2", required=False, widget=forms.Select(attrs={'class': 'chosen-select'}))
 
     class Meta:
         model = Emprunt
@@ -16,12 +16,12 @@ class NouvelEmpruntForm(forms.ModelForm):
 
 
 class AdherentForm(forms.ModelForm):
-    name = forms.CharField(max_length=64, label="NOM Prenom", required=True)
-    adhesion = forms.CharField(max_length=64, label="Adhesion", required=True)
+    name = forms.CharField(max_length=64, label="NOM", required=True)
+    firstName = forms.CharField(max_length=64, label="Prenom", required=True)
 
     class Meta:
         model = Adherent
-        fields = ['name', 'adhesion']
+        fields = ['name', 'firstName']
 
 
 class GearForm(forms.ModelForm):
@@ -34,18 +34,19 @@ class GearForm(forms.ModelForm):
         fields = ['name', 'category', 'photo']
 
 
+class ReparationForm(forms.ModelForm):
+    gear = forms.ModelChoiceField(queryset=Gear.objects.filter(isInService=True), label="Matériel", required=True, widget=forms.Select(attrs={'class': 'chosen-select'}))
+    commentaire = forms.CharField(widget=forms.Textarea, required=True, label="Commentaire")
+
+    class Meta:
+        model = Reparation
+        fields = ['gear', 'commentaire']
+
+
 class AddImageForm(forms.Form):
     photo = forms.ImageField(label="Ajouter image", required=True)
 
     class Meta:
         fields = ['photo']
-
-
-class RetourForm(forms.Form):
-    gear1IsDamaged = forms.BooleanField(required=False, label="Materiel 1")
-    gear2IsDamaged = forms.BooleanField(required=False, label="Materiel 2")
-
-    class Meta:
-        fields = ['gear1IsDamaged', 'gear2IsDamaged']
 
 

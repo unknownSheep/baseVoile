@@ -1,116 +1,177 @@
-{% include "gestion/head.html" %}
-        <table class="table-sortable w3-table-all w3-hoverable">
-            <thead>
-            <tr>
-                <th data-sort="string">Noms Adherents</th>
-                <th data-sort="string">Depart</th>
-                <th data-sort="string">Materiel 1</th>
-                <th data-sort="string">Materiel 2</th>
-                <th>Retour</th>
-                <th>Degats</th>
-            </tr>
-            </thead>
-            <tbody
-            {% for e in sortis %}
-                <tr>
-                    <td>{{ e.adherent1 }}<br>{% if e.adherent2 %}{{ e.adherent2 }} {% endif %}</td>
-                    <td>{{ e.startTime.time }}</td>
-                    <td>
-                    {% if e.gear1 %}
-                        {% if e.gear1.photo %}
-                            <img src="{{ e.gear1.photo.url }}" alt="" width="100" height="100">
-                        {% else %}
-                            {{ e.gear1 }}
-                        {% endif %}
-                    {% endif %}
-                    </td>
-                    <td>
-                    {% if e.gear2 %}
-                        {% if e.gear2.photo %}
-                            <img src="{{ e.gear2.photo.url }}" alt="" width="100" height="100">
-                        {% else %}
-                            {{ e.gear2 }}
-                        {% endif %}
-                    {% endif %}
-                    </td>
-                    <td colspan="2">
-                        <form method="post">
-                            {% csrf_token %}
-                            <input type="submit" name="action" value="Retour">
-                            <input type="hidden" name="id" value="{{ e.id }}">
-                            {{ retourForm.as_div }}
-                        </form>
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+{% load static %}
 
-        <div>
-            <form method="post">
-                {% csrf_token %}
-                {{ nouvelEmpruntForm.as_div }}
-                <input type="submit" name="action" value="Nouvel Emprunt">
-            </form>
-        </div>
+<!DOCTYPE html>
+<html lang="fr">
+<meta charset="UTF-8">
+<title>AS CEA/ST Section Voile</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="{% static 'css/gestion/w3.css' %}">
+<link rel="stylesheet" href="{% static 'css/gestion/tablesort.css' %}">
 
-        <div>
-            <h1 class="l1">Retours</h1>
-        </div>
+<link rel="stylesheet" href="{% static 'css/gestion/docsupport/style.css' %}">
+<link rel="stylesheet" href="{% static 'css/gestion/docsupport/prism.css' %}">
+<link rel="stylesheet" href="{% static 'css/gestion/chosen.min.css' %}">
 
-        <table class="table-sortable w3-table-all w3-hoverable">
-            <thead>
-            <tr>
-                <th data-sort="string">Noms Adherents</th>
-                <th data-sort="string">Depart</th>
-                <th data-sort="string">Materiel 1</th>
-                <th data-sort="string">Materiel 2</th>
-                <th data-sort="string">Retour</th>
-                <th>Degats</th>
-            </tr>
-            </thead>
-            <tbody>
-        {% for e in rentres %}
-            <tr>
-                <td>{{ e.adherent1 }}<br>{% if e.adherent2 %}{{ e.adherent2 }} {% endif %}</td>
-                <td>{{ e.startTime.time }}</td>
-                <td>
-                {% if e.gear1 %}
-                    {% if e.gear1.photo %}
-                        <img src="{{ e.gear1.photo.url }}" alt="" width="100" height="100">
-                    {% else %}
-                        {{ e.gear1 }}
-                    {% endif %}
+
+<script src="{% static 'js/gestion/docsupport/jquery-3.2.1.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/gestion/chosen.jquery.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/gestion/docsupport/prism.js' %}" type="text/javascript" charset="utf-8"></script>
+
+
+<link rel="icon" type="image/x-icon" href="{% static 'icon/gestion/sailing-boat.ico' %}">
+<script src="{% static 'js/gestion/tablesort.min.js' %}"></script>
+
+<body>
+    <div class="w3-container">
+        <div class="w3-top">
+            <div class="w3-black w3-bar">
+                {% if pageName == "adherents"%}
+                    <a href="{% url 'adherents' %}" class="w3-bar-item w3-button w3-grey">Adhérents</a>
+                {% else %}
+                    <a href="{% url 'adherents' %}" class="w3-bar-item w3-button">Adhérents</a>
                 {% endif %}
-                </td>
-                <td>
-                {% if e.gear2 %}
-                    {% if e.gear2.photo %}
-                        <img src="{{ e.gear2.photo.url }}" alt="" width="100" height="100">
-                    {% else %}
-                        {{ e.gear2 }}
-                    {% endif %}
+
+                {% if pageName == "materiel"%}
+                    <a href="{% url 'materiel' option=0 %}" class="w3-bar-item w3-button w3-grey">Matériel</a>
+                {% else %}
+                    <a href="{% url 'materiel' option=0 %}" class="w3-bar-item w3-button">Matériel</a>
                 {% endif %}
-                </td>
-                <td>{{ e.returnTime.time }}</td>
-                <td>
-                    Degats Materiel 1:
-                    {% if e.gear1IsDamaged %}
-                    	V
-                    {% else %}
-                        X
-                    {% endif %}
-                    <br> Degats Materiel 2:
-                    {% if e.gear2IsDamaged %}
-                    	V
-                    {% else %}
-                        X
-                    {% endif %}
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-        </table>
-        <script>document.querySelectorAll('.table-sortable').forEach(el => el.tsortable())</script>
+
+                {% if pageName == "emprunts"%}
+                    <a href="{% url 'emprunts' %}" class="w3-bar-item w3-button w3-grey">Emprunts</a>
+                {% else %}
+                    <a href="{% url 'emprunts' %}" class="w3-bar-item w3-button">Emprunts</a>
+                {% endif %}
+
+                {% if pageName == "repair"%}
+                    <a href="{% url 'reparations' %}" class="w3-bar-item w3-button w3-grey">Réparations</a>
+                {% else %}
+                    <a href="{% url 'reparations' %}" class="w3-bar-item w3-button">Réparations</a>
+                {% endif %}
+
+                {% if pageName == "historique"%}
+                    <a href="{% url 'historique' %}" class="w3-bar-item w3-button w3-grey">Historique</a>
+                {% else %}
+                    <a href="{% url 'historique' %}" class="w3-bar-item w3-button">Historique</a>
+                {% endif %}
+
+                {% if pageName == "surveillance"%}
+                    <a href="{% url 'surveillance' %}" class="w3-bar-item w3-button w3-grey">Surveillance</a>
+                {% else %}
+                    <a href="{% url 'surveillance' %}" class="w3-bar-item w3-button">Surveillance</a>
+                {% endif %}
+            </div>
+            <div class="w3-light-gray" style=" margin: 5px 0 5px 0; border: 1px solid #ccc; padding: 5px;">
+                <h4 style="margin: 0">Nouvel Emprunt :</h4>
+                <form method="post">
+                    {% csrf_token %}
+                    {# {{ nouvelEmpruntForm }} #}
+                    <div style="display: inline-block;">
+                        <div>
+                            <label for="{{ nouvelEmpruntForm.adherent1.id_for_label }}">{{ nouvelEmpruntForm.adherent1.label }} :</label>
+                            {{ nouvelEmpruntForm.adherent1 }}
+                        </div>
+                        <div>
+                            <label for="{{ nouvelEmpruntForm.adherent2.id_for_label }}">{{ nouvelEmpruntForm.adherent2.label }} :</label>
+                            {{ nouvelEmpruntForm.adherent2 }}
+                        </div>
+                    </div>
+                    <div style="display: inline-block;">
+                        <div>
+                            <label for="{{ nouvelEmpruntForm.gear1.id_for_label }}">{{ nouvelEmpruntForm.gear1.label }} :</label>
+                            {{ nouvelEmpruntForm.gear1 }}
+                        </div>
+                        <div>
+                            <label for="{{ nouvelEmpruntForm.gear2.id_for_label }}">{{ nouvelEmpruntForm.gear2.label }} :</label>
+                            {{ nouvelEmpruntForm.gear2 }}
+                        </div>
+                    </div>
+
+                    <input type="submit" name="action" value="Nouvel Emprunt">
+
+                </form>
+            </div>
+        </div>
+        <br><br>
+
+
+
+
+    <br><br><br><br>
+<div>
+    <h2 class="l1" style="margin: 0">Sortis</h2>
+</div>
+
+<table class="table-sortable w3-table-all w3-hoverable">
+    <thead>
+    <tr class="w3-grey">
+        <th data-sort="string">Noms Adherents</th>
+        <th data-sort="string">Depart</th>
+        <th data-sort="string">Materiel 1</th>
+        <th data-sort="string">Materiel 2</th>
+        <th>Retour</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for e in sortis %}
+        <tr>
+            <td>{{ e.adherent1 }}<br>{% if e.adherent2 %}{{ e.adherent2 }} {% endif %}</td>
+            <td>{{ e.startTime.time }}</td>
+            <td>
+                {{ e.gear1 }}
+            </td>
+            <td>
+            {% if e.gear2 %}
+                {{ e.gear2 }}
+            {% endif %}
+            </td>
+            <td colspan="2">
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="submit" name="action" value="Retour">
+                    <input type="hidden" name="id" value="{{ e.id }}">
+                </form>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<div>
+    <h2 class="l1">Retours</h2>
+</div>
+<table class="table-sortable w3-table-all w3-hoverable">
+    <thead>
+    <tr class="w3-grey">
+        <th data-sort="string">Noms Adherents</th>
+        <th data-sort="string">Depart</th>
+        <th data-sort="string">Materiel 1</th>
+        <th data-sort="string">Materiel 2</th>
+        <th data-sort="string">Retour</th>
+    </tr>
+    </thead>
+    <tbody>
+{% for e in rentres %}
+    <tr>
+        <td>{{ e.adherent1 }}<br>{% if e.adherent2 %}{{ e.adherent2 }} {% endif %}</td>
+        <td>{{ e.startTime.time }}</td>
+        <td>
+            {{ e.gear1 }}
+        </td>
+        <td>
+        {% if e.gear2 %}
+            {{ e.gear2 }}
+        {% endif %}
+        </td>
+        <td>{{ e.returnTime.time }}</td>
+    </tr>
+{% endfor %}
+</tbody>
+</table>
+<script>document.querySelectorAll('.table-sortable').forEach(el => el.tsortable())</script>
+
+<script src="{% static 'js/gestion/docsupport/init.js' %}" type="text/javascript" charset="utf-8"></script>
+
+        
     </div>
 </body>

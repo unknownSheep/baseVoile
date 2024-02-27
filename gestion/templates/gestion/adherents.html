@@ -1,27 +1,37 @@
+{% load static %}
 {% include "gestion/head.html" %}
-        <table class="table-sortable w3-table-all w3-hoverable">
+        <input type="text" class="table-filter" data-table="order-table" placeholder="Chercher...">
+        <table class="order-table table table-sortable w3-table-all w3-hoverable">
             <thead>
-            <tr>
+            <tr class="w3-grey">
                 <th data-sort="string">NOM Prenom</th>
+                <th data-sort="string">Entreprise</th>
                 <th data-sort="date">Cotisation</th>
             </tr>
             </thead>
             <tbody>
             {% for a in adherents %}
                 <tr>
-                    <td>{{ a.name }}</td>
-                    <td>{{ a.adhesion }}</td>
+                    <td>{{ a.name }}&nbsp;{{ a.firstName }}</td>
+                    <td>{{ a.entreprise|default_if_none:"&nbsp;" }}</td>
+                    <td>{{ a.adhesion|default_if_none:"&nbsp;" }}</td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
-        <div>
-            <form method="post">
-                {% csrf_token %}
-                {{ addForm }}
-                <input type="submit" name="action" value="Ajouter">
-            </form>
+        <br>
+        <br>
+        <div class="w3-bottom w3-bar w3-grey" style="border: 1px solid black">
+            <div style="display: flex; align-items: center;">
+                <h4 style="margin: 0;">Nouvel Adherent :</h4>
+                <form method="post" style="margin: 5px;">
+                    {% csrf_token %}
+                    {{ addForm.as_table }}
+                    <input type="submit" name="action" value="Ajouter">
+                </form>
+            </div>
         </div>
     </div>
     <script>document.querySelector('.table-sortable').tsortable()</script>
+    <script src="{% static 'js/gestion/tablefilter.js' %}"></script>
 </body>

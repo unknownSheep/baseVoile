@@ -1,28 +1,57 @@
+{% load static %}
 {% include "gestion/head.html" %}
+
+<style>
+textarea {
+    width: 1000px;
+    height: 30px;
+    min-height: 30px;
+    max-height: 100px;
+    resize: vertical;
+  }</style>
+
+<div class="w3-light-gray" style=" margin: 5px 0 5px 0; border: 1px solid #ccc; padding: 5px;">
+                <h4 style="margin: 0">Ajouter Réparation :</h4>
+                <form method="post">
+                    {% csrf_token %}
+                    <div style="display: inline-block; vertical-align: top;">
+                        <div>
+                            <label for="{{ repaForm.gear.id_for_label }}">{{ repaForm.gear.label }} :</label>
+                            {{ repaForm.gear }}
+                        </div>
+                    </div>
+                    <div style="display: inline-block; vertical-align: middle;">
+                        <div>
+                            <label for="{{ repaForm.commentaire.id_for_label }}" style="vertical-align: top; ">{{ repaForm.commentaire.label }} :</label>
+                            {{ repaForm.commentaire }}
+                        </div>
+                    </div>
+
+                    <input type="submit" name="action" value="Ajouter">
+
+                </form>
+    </div>
+
 <table class="table-sortable w3-table-all w3-hoverable">
-    <tr>
-        <thead>
-        <th data-sort="string">Nom</th>
-        <th data-sort="string">Categorie</th>
-        <th data-sort="string">A reparer</th>
-        <th>Repare</th>
-        </thead>
-    </tr>
+    <thead>
+        <tr class="w3-grey">
+            <th data-sort="string">Materiel</th>
+            <th data-sort="string">Date</th>
+            <th data-sort="string">Commentaire</th>
+            <th>Reparé</th>
+        </tr>
+    </thead>
     <tbody>
-    {% for m in reparer %}
+    {% for r in reparations %}
         <tr>
-            <td>{{ m.name }}</td>
-            <td>{{ m.category.name }}</td>
-            {% if m.toRepair %}
-                <td>V</td>
-            {% else %}
-                <td>X</td>
-            {% endif %}
+            <td>{{ r.gear }}</td>
+            <td>{{ r.dateDebut.date }}</td>
+            <td>{{ r.commentaire }}</td>
             <td>
                 <form method="post">
                     {% csrf_token %}
-                    <input type="hidden" name="id" value="{{ m.id }}">
-                    <input type="submit" name="action" value="Repare">
+                    <input type="hidden" name="id" value="{{ r.id }}">
+                    <input type="submit" name="action" value="Reparé">
                 </form>
             </td>
         </tr>
@@ -32,3 +61,5 @@
 <script>document.querySelector('.table-sortable').tsortable()</script>
 </div>
 </body>
+
+<script src="{% static 'js/gestion/docsupport/init.js' %}" type="text/javascript" charset="utf-8"></script>

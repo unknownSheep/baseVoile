@@ -1,13 +1,13 @@
+{% load static %}
 {% include "gestion/head.html" %}
-        <table class="table-sortable w3-table-all w3-hoverable">
+        <input type="text" class="table-filter" data-table="order-table" placeholder="Chercher...">
+        <table class="order-table table-sortable w3-table-all w3-hoverable">
             <thead>
-            <tr>
-                <th data-sort="string">Noms Adherents</th>
-                <th data-sort="string">Date</th>
-                <th data-sort="string">Materiel 1</th>
-                <th data-sort="string">Materiel 2</th>
-                <th data-sort="string">Degats</th>
-            </tr>
+                <tr class="w3-grey">
+                    <th data-sort="string">Noms Adherents</th>
+                    <th data-sort="string">Date</th>
+                    <th data-sort="string">Materiel</th>
+                </tr>
             </thead>
             <tbody>
             {% for e in emprunts %}
@@ -15,41 +15,17 @@
                 <td>{{ e.adherent1 }}<br>{% if e.adherent2 %}{{ e.adherent2 }} {% endif %}</td>
                 <td>{{ e.startTime.date }}</td>
                 <td>
-                {% if e.gear1 %}
-                    {% if e.gear1.photo %}
-                        <img src="{{ e.gear1.photo.url }}" alt="" width="100" height="100">
-                    {% else %}
-                        {{ e.gear1.category.name }}: {{ e.gear1.name }}
-                    {% endif %}
-                {% endif %}
-                </td>
-                <td>
+                {{ e.gear1.category.name }}: {{ e.gear1.name }}
+                <br>
                 {% if e.gear2 %}
-                    {% if e.gear2.photo %}
-                        <img src="{{ e.gear2.photo.url }}" alt="" width="100" height="100">
-                    {% else %}
-                        {{ e.gear2.category.name }}: {{ e.gear2.name }}
-                    {% endif %}
+                    {{ e.gear2.category.name }}: {{ e.gear2.name }}
                 {% endif %}
-                </td>
-                <td>
-                    Degats Materiel 1:
-                    {% if e.gear1IsDamaged %}
-                    	V
-                    {% else %}
-                        X
-                    {% endif %}
-                    <br> Degats Materiel 2:
-                    {% if e.gear2IsDamaged %}
-                    	V
-                    {% else %}
-                        X
-                    {% endif %}
                 </td>
             </tr>
         {% endfor %}
         </tbody>
         </table>
         <script>document.querySelector('.table-sortable').tsortable()</script>
+        <script src="{% static 'js/gestion/tablefilter.js' %}"></script>
     </div>
 </body>

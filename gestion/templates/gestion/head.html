@@ -7,6 +7,17 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="stylesheet" href="{% static 'css/gestion/w3.css' %}">
 <link rel="stylesheet" href="{% static 'css/gestion/tablesort.css' %}">
+
+<link rel="stylesheet" href="{% static 'css/gestion/docsupport/style.css' %}">
+<link rel="stylesheet" href="{% static 'css/gestion/docsupport/prism.css' %}">
+<link rel="stylesheet" href="{% static 'css/gestion/chosen.min.css' %}">
+
+
+<script src="{% static 'js/gestion/docsupport/jquery-3.2.1.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/gestion/chosen.jquery.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/gestion/docsupport/prism.js' %}" type="text/javascript" charset="utf-8"></script>
+
+
 <link rel="icon" type="image/x-icon" href="{% static 'icon/gestion/sailing-boat.ico' %}">
 <script src="{% static 'js/gestion/tablesort.min.js' %}"></script>
 
@@ -20,9 +31,9 @@
             {% endif %}
 
             {% if pageName == "materiel"%}
-                <a href="{% url 'materiel' %}" class="w3-bar-item w3-button w3-grey">Matériel</a>
+                <a href="{% url 'materiel' option=0 %}" class="w3-bar-item w3-button w3-grey">Matériel</a>
             {% else %}
-                <a href="{% url 'materiel' %}" class="w3-bar-item w3-button">Matériel</a>
+                <a href="{% url 'materiel' option=0 %}" class="w3-bar-item w3-button">Matériel</a>
             {% endif %}
 
             {% if pageName == "emprunts"%}
@@ -41,6 +52,12 @@
                 <a href="{% url 'historique' %}" class="w3-bar-item w3-button w3-grey">Historique</a>
             {% else %}
                 <a href="{% url 'historique' %}" class="w3-bar-item w3-button">Historique</a>
+            {% endif %}
+
+            {% if pageName == "surveillance"%}
+                <a href="{% url 'surveillance' %}" class="w3-bar-item w3-button w3-grey">Surveillance</a>
+            {% else %}
+                <a href="{% url 'surveillance' %}" class="w3-bar-item w3-button">Surveillance</a>
             {% endif %}
         </div>
         <br><br>
