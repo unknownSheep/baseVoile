@@ -2,3 +2,5 @@ __pycache__
 voilevenv
 .venv
 chosen
+ajout_dans_bd/export*
+ajout_dans_bd/materiel.xlsx
