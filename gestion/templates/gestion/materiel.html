@@ -1,3 +1,4 @@
+{% load static %}
 {% include "gestion/head.html" %}
 
 {% if option == 1 %}
@@ -6,7 +7,8 @@
 <a href="{% url 'materiel' option=1 %}" class="w3-bar-item w3-button w3-grey" style="margin: 0 0 10px 0;">Corbeille</a>
 {% endif %}
 
-<table class="table-sortable w3-table-all w3-hoverable">
+<input type="text" class="table-filter" data-table="order-table" placeholder="Chercher...">
+<table class="order-table table-sortable w3-table-all w3-hoverable">
     <thead>
         <tr class="w3-grey">
             <th data-sort="string">Nom</th>
@@ -49,6 +51,7 @@
     </tbody>
 </table>
 <script>document.querySelector('.table-sortable').tsortable()</script>
+<script src="{% static 'js/gestion/tablefilter.js' %}"></script>
 
 <br>
 <br>

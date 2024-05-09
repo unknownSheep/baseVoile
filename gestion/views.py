@@ -28,7 +28,7 @@ def emprunts(request):
     context = {
         "pageName": "emprunts",
         "nouvelEmpruntForm": nouvelEmpruntForm,
-        "sortis": Emprunt.objects.filter(returnTime__isnull=True).order_by('-startTime'),
+        "sortis": Emprunt.objects.filter(returnTime__isnull=True).order_by('startTime'),
         "rentres": Emprunt.objects.filter(returnTime__isnull=False).filter(startTime__day=timezone.now().day)
         .filter(startTime__month=timezone.now().month)
         .filter(startTime__year=timezone.now().year)

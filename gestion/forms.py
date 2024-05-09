@@ -17,7 +17,7 @@ class NouvelEmpruntForm(forms.ModelForm):
 
 class AdherentForm(forms.ModelForm):
     name = forms.CharField(max_length=64, label="NOM", required=True)
-    firstName = forms.CharField(max_length=64, label="Prenom", required=True)
+    firstName = forms.CharField(max_length=64, label="Prénom", required=True)
 
     class Meta:
         model = Adherent
