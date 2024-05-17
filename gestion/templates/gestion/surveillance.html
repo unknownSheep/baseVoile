@@ -2,29 +2,18 @@
 
 <div style="display: flex; flex-wrap: wrap; justify-content: flex-start;">
     {% for e in sortis %}
-        <div style="text-align: center; width: 160px">
-        {% if e.gear1.photo %}
-            <div style="width: 150px; height: 150px; border: 2px solid black; align-items: center; justify-content: center; margin: 0 auto; 
-        background-size: cover; background-position: center; background-image: url('{{ e.get_image }}')">{{ e.gear1.name }}</div>
+        <div style="text-align: center; width: 210px">
+        {% if e.get_image is not None %}
+            <div style="width: 200px; height: 200px; border: 2px solid black; align-items: center; justify-content: center; margin: 0 auto; 
+        background-size: cover; background-position: center; background-image: url('{{ e.get_image }}')">{{ e.get_name }}</div>
         {% else %}
-            <div style="width: 150px; height: 150px; background-color: #ccc; border: 2px solid black; display: flex; align-items: center; justify-content: center; margin: 0 auto;">{{ e.gear1 }}</div>
+            <div style="width: 200px; height: 200px; background-color: #ccc; border: 2px solid black; display: flex;
+             align-items: center; justify-content: center; margin: 0 auto;">{{ e.get_name }}</div>
         {% endif %}
         <p>{{ e.adherent1.name }} {{ e.adherent1.firstName }}<br> {{ e.adherent2.name }} {{ e.adherent2.firstName }}</p>
     </div>
     {% endfor %}
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
 
     </div>
 </body>

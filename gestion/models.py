@@ -94,5 +94,17 @@ class Emprunt(models.Model):
                 else:
                     return self.gear2.photo.url
 
+    def get_name(self):
+        assert self.gear1 is not None
+
+        if self.gear2 is None:
+            return str(self.gear1)
+
+        else:  # 2 images
+            if self.gear1.category.level >= self.gear2.category.level:
+                return str(self.gear1)
+            else:
+                return str(self.gear2)
+
     class Meta:
         verbose_name = 'Emprunt'
